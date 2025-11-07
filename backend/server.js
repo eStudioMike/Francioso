@@ -8,6 +8,20 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
+// server.js (snippet)
+const cors = require("cors");
+
+app.use(express.json());
+
+// consenti il dev server Vite (e in produzione il FRONTEND_URL se impostato)
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+app.use(
+  cors({
+    origin: FRONTEND_URL,
+    credentials: true, // se usi cookie / auth basata su cookie
+  })
+);
+
 // health
 app.get("/health", (req, res) => res.json({ ok: true }));
 
