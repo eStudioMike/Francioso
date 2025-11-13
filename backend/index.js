@@ -1,4 +1,6 @@
 // index.js
+require("./routes/auth");
+
 require("dotenv").config();
 const express = require("express");
 const { Client } = require("pg");
@@ -40,7 +42,7 @@ app.get("/", (req, res) => {
   res.sendFile(indexFile, (err) => {
     if (err) {
       return res.send(`
-        <h1>Francioso CRM - Backend</h1>
+        <h1>Francioso CRM</h1>
         <p>Server attivo. Usa <a href="/health">/health</a> e <a href="/users">/users</a></p>
       `);
     }
@@ -65,3 +67,10 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`🚀 Server avviato su http://localhost:${port}`);
 });
+
+// subito dopo client.connect() (o subito dopo la creazione del client)
+app.set("dbClient", client);
+
+// registra le route auth (metti questo vicino alle altre app.use / app.get)
+const authRouter = require("./routes/auth");
+app.use("/auth", authRouter);

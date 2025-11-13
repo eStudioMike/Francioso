@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <!-- Inserisci qui l'API_BASE del tuo backend Render o usa "/" per dev locale -->
+    <!-- Esempio: <meta name="api-base" content="https://crm-francioso.onrender.com"> -->
+    <meta name="api-base" content="/" />
+    <title>Francioso CRM — Login</title>
+    <style>
+      :root {
+        --bg: #0f1724;
+        --card: #0b1220;
+        --muted: #9aa4b2;
+        --accent: #6ee7b7;
+        --danger: #ff6b6b;
+        --glass: rgba(255, 255, 255, 0.03);
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        background: radial-gradient(
+            circle at 10% 10%,
+            rgba(110, 231, 183, 0.06),
+            transparent 10%
+          ),
+          radial-gradient(
+            circle at 90% 90%,
+            rgba(99, 102, 241, 0.06),
+            transparent 10%
+          ),
+          var(--bg);
+        color: #e6eef6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .card {
+        width: 100%;
+        max-width: 980px;
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 24px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: 0 6px 30px rgba(2, 6, 23, 0.7);
+        padding: 28px;
+        border-radius: 16px;
+        backdrop-filter: blur(6px);
+      }
+      .hero {
+        padding: 24px;
+      }
+      .logo {
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        font-size: 20px;
+        color: var(--accent);
+      }
+      h1 {
+        margin: 12px 0 8px;
+        font-size: 28px;
+      }
+      p.lead {
+        color: var(--muted);
+        margin: 0 0 18px;
+        max-width: 60%;
+      }
+      .features {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+      .feat {
+        background: var(--glass);
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      form {
+        padding: 18px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        border-radius: 12px;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        background: rgba(255, 255, 255, 0.02);
+        color: #eaf2ff;
+        outline: none;
+        box-sizing: border-box;
+      }
+      .row {
+        margin-bottom: 14px;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 6px;
+      }
+      button.primary {
+        background: linear-gradient(90deg, var(--accent), #34d399);
+        color: #062018;
+        border: none;
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button.secondary {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .msg {
+        font-size: 13px;
+        margin-top: 10px;
+        min-height: 18px;
+        color: var(--muted);
+      }
+      .error {
+        color: var(--danger);
+      }
+      .small {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      @media (max-width: 900px) {
+        .card {
+          grid-template-columns: 1fr;
+          padding: 18px;
+        }
+        p.lead {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card" role="main">
+      <section class="hero" aria-labelledby="title">
+        <img
+          src="/assets/logoFrancioso.png"
+          srcset="/assets/logo@2x.png 2x"
+          alt="Francioso CRM"
+          width="180"
+          decoding="async"
+          fetchpriority="high"
+        />
+        <div class="logo">Francioso CRM</div>
+        <h1 id="title">Accedi al pannello</h1>
+        <p class="lead">
+          Accedi con la tua email e password. Se non hai un account, contatta
+          l'amministratore.
+        </p>
+      </section>
+
+      <section>
+        <form id="loginForm" autocomplete="on" novalidate>
+          <div class="row">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              inputmode="email"
+              placeholder="tuo@esempio.com"
+              required
+            />
+          </div>
+
+          <div class="row">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="••••••••"
+              required
+              minlength="8"
+            />
+          </div>
+
+          <div class="row small">
+            <label
+              ><input id="remember" type="checkbox" /> Ricordami su questo
+              dispositivo</label
+            >
+          </div>
+
+          <div class="actions">
+            <button type="button" class="secondary" id="demoBtn">Demo</button>
+            <button type="submit" class="primary">Accedi</button>
+          </div>
+
+          <div class="msg" id="msg" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        const apiBaseMeta = document.querySelector('meta[name="api-base"]');
+        const API_BASE =
+          apiBaseMeta && apiBaseMeta.content && apiBaseMeta.content !== "/"
+            ? apiBaseMeta.content.replace(/\/+$/, "")
+            : "";
+
+        const loginForm = document.getElementById("loginForm");
+        const msgEl = document.getElementById("msg");
+        const demoBtn = document.getElementById("demoBtn");
+
+        function showMsg(text, type) {
+          msgEl.textContent = text;
+          msgEl.className = type ? "msg " + type : "msg";
+        }
+
+        demoBtn.addEventListener("click", (e) => {
+          // demo credentials (solo per ambiente di test)
+          document.getElementById("email").value = "mario.rossi@example.com";
+          document.getElementById("password").value = "Password123";
+          showMsg("Credenziali demo inserite (non usare in produzione)", null);
+        });
+
+        async function handleLogin(event) {
+          event.preventDefault();
+          showMsg("Invio in corso...");
+
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+
+          if (!email || !password) {
+            showMsg("Inserisci email e password", "error");
+            return;
+          }
+
+          try {
+            const res = await fetch((API_BASE || "") + "/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include", // opzionale: se usi cookie-based sessions
+              body: JSON.stringify({ email, password }),
+            });
+
+            if (!res.ok) {
+              const err = await res
+                .json()
+                .catch(() => ({ message: "Errore server" }));
+              showMsg(err.message || "Autenticazione fallita", "error");
+              return;
+            }
+
+            const data = await res.json();
+            // esempio di risposta attesa: { token: 'JWT...', user: { id, email, name, roles: [...] } }
+
+            // Salva token in modo semplice: localStorage (oppure cookie httpOnly dal server)
+            if (data.token) {
+              // se "remember" è spuntato, mantieni persistente, altrimenti sessionStorage
+              const remember = document.getElementById("remember").checked;
+              if (remember) localStorage.setItem("francioso_token", data.token);
+              else sessionStorage.setItem("francioso_token", data.token);
+            }
+
+            // opzionale: salva utente
+            if (data.user)
+              localStorage.setItem("francioso_user", JSON.stringify(data.user));
+
+            showMsg("Login eseguito, reindirizzamento...", null);
+            // redirect alla dashboard (crea /dashboard.html o /app)
+            setTimeout(() => {
+              window.location.href = (API_BASE ? "" : "") + "/dashboard.html"; // cambia se hai una dashboard
+            }, 700);
+          } catch (err) {
+            console.error(err);
+            showMsg("Errore di rete. Riprova.", "error");
+          }
+        }
+
+        loginForm.addEventListener("submit", handleLogin);
+      })();
+    </script>
+  </body>
+</html>
